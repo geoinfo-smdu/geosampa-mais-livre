@@ -15,7 +15,3 @@ var updateHeader = function() {
 }
 
 updateHeader();
-
- 
-
-
