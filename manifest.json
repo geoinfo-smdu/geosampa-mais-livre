@@ -17,6 +17,8 @@
         "matches": ["*://*.geosampa.prefeitura.sp.gov.br/*"],
         "js": ["mais_livre.js"]
       }
-    ]
+    ],
+    
+    "web_accessible_resources": ["images/*.png"]
   
   }
