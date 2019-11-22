@@ -15,10 +15,10 @@
       {
         "run_at": "document_end",
         "matches": ["*://*.geosampa.prefeitura.sp.gov.br/*"],
-        "js": ["mais_livre.js"]
+        "js": ["mais_livre.js", "js/awesomplete.js"]
       }
     ],
     
-    "web_accessible_resources": ["images/*.png"]
+    "web_accessible_resources": ["images/*.png", "css/awesomplete.css"]
   
   }
