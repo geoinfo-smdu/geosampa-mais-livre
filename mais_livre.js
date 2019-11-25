@@ -60,24 +60,14 @@ var updateHeader = function() {
         searchBox.style.width = "100%";
         searchBox.style.padding = "8px 12px";
         searchBox.className = "awesomplete";
-        searchBox.setAttribute("list", "listaCamadas");
+        searchBox.setAttribute("data-list", "listaCamadas");
         searchBox.setAttribute("id", "searchBox");
-        var listaCamadas = document.createElement("datalist");
-        listaCamadas.setAttribute("id", "listaCamadas");
-        //var listaA = ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"];
-        function consoleArray(value) {
-            console.log(value);
-            var optionCamada = document.createElement("option");
-            optionCamada.innerText = value;
-            listaCamadas.appendChild(optionCamada);
-        };
-        listaA.forEach(consoleArray);
-        //searchBox.setAttribute("data-list", "Ada, Java, JavaScript, Brainfuck, LOLCODE, Node.js, Ruby on Rails");
         divSearch.appendChild(searchBox);
-        divSearch.appendChild(listaCamadas);
         document.getElementById("LayersWhiteCamadas").insertAdjacentElement('afterbegin', divSearch);
-        document.getElementById('searchBox').addEventListener('awesomplete-select',function(){
-            console.log('seila'); 
+        var awesomplete = new Awesomplete(searchBox);
+        awesomplete.list = listaA;
+        document.getElementById('searchBox').addEventListener('awesomplete-close',function(event){
+            console.log(event); 
         });
         // criar um autocomplete https://leaverou.github.io/awesomplete/
     }
