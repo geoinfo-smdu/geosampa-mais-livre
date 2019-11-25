@@ -4,24 +4,40 @@ function verifyHeaderElement() {
 
 console.log(verifyHeaderElement());
 
+// Get HTML head element 
+var head = document.getElementsByTagName('HEAD')[0];  
+// Create new link Element 
+var link = document.createElement('link'); 
+// set the attributes for link element  
+link.rel = 'stylesheet';  
+link.type = 'text/css'; 
+link.href = browser.runtime.getURL("css/awesomplete.css");  
+// Append link element to HTML head 
+head.appendChild(link);  
+// Adicionando o searchBox
+
 let url = 'http://geosampa.prefeitura.sp.gov.br/js/Layers.js';
 let jsonLayers;
+var listaA = [];
 
 fetch(url)
 .then(res => res.json())
 .then((out) => {
-  console.log('Checkout this JSON! ', out);
+  //console.log('Checkout this JSON! ', out);
   jsonLayers = out;
   jsonLayers.layersMapa.forEach(element => {
-    console.log(element.layerLabel);
+    //console.log(element.layerLabel);
+    listaA.push(element.layerLabel);
     if (element.subcamadas.length > 0) {
         element.subcamadas.forEach(element => {
             if (element.subcamadas.length > 0) {
                 element.subcamadas.forEach(element => {
-                    console.log(element.layerLabel); 
+                    //console.log(element.layerLabel);
+                    listaA.push(element.layerLabel); 
                 })
             }
-            console.log(element.layerLabel); 
+            //console.log(element.layerLabel);
+            listaA.push(element.layerLabel); 
         })
     }
 });
@@ -37,17 +53,6 @@ var updateHeader = function() {
     } 
     else {
         document.evaluate('/html/body/form/div[22]/table/tbody/tr/td[1]/img', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.src =  browser.runtime.getURL("images/logo_superior_esquerda.png");
-        // Get HTML head element 
-        var head = document.getElementsByTagName('HEAD')[0];  
-        // Create new link Element 
-        var link = document.createElement('link'); 
-        // set the attributes for link element  
-        link.rel = 'stylesheet';  
-        link.type = 'text/css'; 
-        link.href = browser.runtime.getURL("css/awesomplete.css");  
-        // Append link element to HTML head 
-        head.appendChild(link);  
-        // Adicionando o searchBox
         var divSearch = document.createElement("div");
         var searchBox = document.createElement("input");
         searchBox.style.borderRadius = "5px";
@@ -56,9 +61,10 @@ var updateHeader = function() {
         searchBox.style.padding = "8px 12px";
         searchBox.className = "awesomplete";
         searchBox.setAttribute("list", "listaCamadas");
+        searchBox.setAttribute("id", "searchBox");
         var listaCamadas = document.createElement("datalist");
         listaCamadas.setAttribute("id", "listaCamadas");
-        var listaA = ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"];
+        //var listaA = ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"];
         function consoleArray(value) {
             console.log(value);
             var optionCamada = document.createElement("option");
@@ -70,6 +76,9 @@ var updateHeader = function() {
         divSearch.appendChild(searchBox);
         divSearch.appendChild(listaCamadas);
         document.getElementById("LayersWhiteCamadas").insertAdjacentElement('afterbegin', divSearch);
+        document.getElementById('searchBox').addEventListener('awesomplete-select',function(){
+            console.log('seila'); 
+        });
         // criar um autocomplete https://leaverou.github.io/awesomplete/
     }
 }

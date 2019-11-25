@@ -1,3 +1,7 @@
+.awesomplete > ul {
+	all: unset;
+}
+
 .awesomplete [hidden] {
     display: none;
 }
