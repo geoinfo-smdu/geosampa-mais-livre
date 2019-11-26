@@ -14,7 +14,6 @@ link.type = 'text/css';
 link.href = chrome.runtime.getURL("css/awesomplete.css");  
 // Append link element to HTML head 
 head.appendChild(link);  
-// Adicionando o searchBox
 
 let url = 'http://geosampa.prefeitura.sp.gov.br/js/Layers.js';
 let jsonLayers;
@@ -23,29 +22,22 @@ var listaA = [];
 fetch(url)
 .then(res => res.json())
 .then((out) => {
-  //console.log('Checkout this JSON! ', out);
   jsonLayers = out;
-  jsonLayers.layersMapa.forEach(element => {
-    //console.log(element.layerLabel);
-    listaA.push(element.layerLabel);
+  out.layersMapa.forEach(element => {
+    listaA.push({"label":element.layerLabel, "value":element.layerID});
     if (element.subcamadas.length > 0) {
         element.subcamadas.forEach(element => {
             if (element.subcamadas.length > 0) {
                 element.subcamadas.forEach(element => {
-                    //console.log(element.layerLabel);
-                    listaA.push(element.layerLabel); 
+                    listaA.push({"label":element.layerLabel, "value":element.layerID}); 
                 })
             }
-            //console.log(element.layerLabel);
-            listaA.push(element.layerLabel); 
+            listaA.push({"label":element.layerLabel, "value":element.layerID}); 
         })
     }
 });
 })
 .catch(err => { throw err });
-
-
-
 
 var updateHeader = function() {
     if (verifyHeaderElement()) {
@@ -66,12 +58,19 @@ var updateHeader = function() {
         document.getElementById("LayersWhiteCamadas").insertAdjacentElement('afterbegin', divSearch);
         var awesomplete = new Awesomplete(searchBox);
         awesomplete.list = listaA;
-        document.getElementById('searchBox').addEventListener('awesomplete-close',function(event){
-            console.log(event); 
+        document.getElementById('searchBox').addEventListener('awesomplete-select',function(event){
+            abreCamada(event); 
         });
         // criar um autocomplete https://leaverou.github.io/awesomplete/
     }
 }
+
+function abreCamada(camada) {
+    console.log(camada.text.value);
+    console.log(document.getElementById(camada.text.value));
+    console.log(document.getElementById(camada.text.value).closest(".near.ancestor"));
+}
+
 
 updateHeader();
 
