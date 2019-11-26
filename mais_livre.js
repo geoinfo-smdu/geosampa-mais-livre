@@ -11,7 +11,7 @@ var link = document.createElement('link');
 // set the attributes for link element  
 link.rel = 'stylesheet';  
 link.type = 'text/css'; 
-link.href = browser.runtime.getURL("css/awesomplete.css");  
+link.href = chrome.runtime.getURL("css/awesomplete.css");  
 // Append link element to HTML head 
 head.appendChild(link);  
 // Adicionando o searchBox
@@ -52,7 +52,7 @@ var updateHeader = function() {
         setTimeout(updateHeader, 100);
     } 
     else {
-        document.evaluate('/html/body/form/div[22]/table/tbody/tr/td[1]/img', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.src =  browser.runtime.getURL("images/logo_superior_esquerda.png");
+        document.evaluate('/html/body/form/div[22]/table/tbody/tr/td[1]/img', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.src =  chrome.runtime.getURL("images/logo_superior_esquerda.png");
         var divSearch = document.createElement("div");
         var searchBox = document.createElement("input");
         searchBox.style.borderRadius = "5px";
