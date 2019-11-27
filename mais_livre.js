@@ -58,8 +58,10 @@ var updateHeader = function() {
         document.getElementById("LayersWhiteCamadas").insertAdjacentElement('afterbegin', divSearch);
         var awesomplete = new Awesomplete(searchBox);
         awesomplete.list = listaA;
-        document.getElementById('searchBox').addEventListener('awesomplete-select',function(event){
-            abreCamada(event); 
+        document.getElementById('searchBox').addEventListener('awesomplete-selectcomplete', function(event){
+            abreCamada(event);
+            this.selected = event.target.value;
+            event.target.value = ''; 
         });
         // criar um autocomplete https://leaverou.github.io/awesomplete/
     }
@@ -68,7 +70,11 @@ var updateHeader = function() {
 function abreCamada(camada) {
     console.log(camada.text.value);
     console.log(document.getElementById(camada.text.value));
-    console.log(document.getElementById(camada.text.value).closest(".near.ancestor"));
+    document.getElementById('searchBox').value = '';
+    let el = document.getElementById(camada.text.value);
+    console.log(jsonLayers.layersMapa[el.attributes.indicegrupo.value - 1].layerID);
+    document.getElementById(jsonLayers.layersMapa[el.attributes.indicegrupo.value - 1].layerID).previousSibling.click();
+    
 }
 
 
