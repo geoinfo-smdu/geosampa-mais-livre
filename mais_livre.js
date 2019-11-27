@@ -74,6 +74,9 @@ function abreCamada(camada) {
     let el = document.getElementById(camada.text.value);
     console.log(jsonLayers.layersMapa[el.attributes.indicegrupo.value - 1].layerID);
     document.getElementById(jsonLayers.layersMapa[el.attributes.indicegrupo.value - 1].layerID).previousSibling.click();
+    if (el.attributes.indicesubgrupo.value != ""){
+        document.getElementById("divGp_" + jsonLayers.layersMapa[el.attributes.indicegrupo.value - 1].layerID).querySelector('input[indicesubgrupo="'+ el.attributes.indicesubgrupo.value +'"]').previousSibling.click();
+    }
     el.click();
     el.scrollIntoView({behavior: "smooth", block: "start"});
 }
