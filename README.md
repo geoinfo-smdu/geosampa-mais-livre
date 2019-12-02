@@ -14,5 +14,5 @@ Portanto, usando esse projeto como inspiração, motivação para aprender como 
 
 O Plugin do GeoSampa, o GeoSampa+Livre está disponível nas lojas dos Browser Firefox e Google Chrome. Basta fazer uma pesquisa por GeoSampa em qualquer uma das duas lojas de aplicativo, os links diretos estão abaixo:
 
-- [Extensão do GeoSampa para Firefox] (https://addons.mozilla.org/pt-BR/firefox/addon/geosampa-livre/)
-- [Extensão do GeoSampa para GoogleChrome] (https://chrome.google.com/webstore/detail/geosampa%2Blivre/blodiljgmokaioebejlhlmniiafddmbk)
+- [Extensão do GeoSampa para Firefox](https://addons.mozilla.org/pt-BR/firefox/addon/geosampa-livre/)
+- [Extensão do GeoSampa para GoogleChrome](https://chrome.google.com/webstore/detail/geosampa%2Blivre/blodiljgmokaioebejlhlmniiafddmbk)
