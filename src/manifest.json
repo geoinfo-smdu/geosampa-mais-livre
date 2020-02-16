@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "GeoSampa+Livre",
+  "version": "0.1",
+
+  "description": "Complemento que adiciona algumas funcionalidades ao GeoSampa, o SIG da Prefeitura do Município de São Paulo",
+
+  "icons": {
+    "48": "icons/geosampa-mais-48px.png",
+    "96": "icons/geosampa-mais-96px.png"
+  },
+
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": ["*://*.geosampa.prefeitura.sp.gov.br/*"],
+      "js": [
+        "js/mais-livre.js",
+        "js/vendor/awesomplete.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "images/*.png",
+    "css/*.css"
+  ],
+  "background": { "scripts": ["hot-reload.js"] }
+}

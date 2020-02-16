@@ -1,0 +1,23 @@
+{
+  "name": "geosampa-mais-livre",
+  "private": true,
+  "version": "1.0.0",
+  "description": "GeoSampa+livre é uma extensão para browser que adiciona algumas funcionalidades ao site do [GeoSampa](http://geosampa.prefeitura.sp.gov.br)",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel build src/manifest.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geoinfo-smdu/geosampa-mais-livre.git"
+  },
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/geoinfo-smdu/geosampa-mais-livre/issues"
+  },
+  "homepage": "https://github.com/geoinfo-smdu/geosampa-mais-livre#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-web-extension": "^1.6.1"
+  }
+}
