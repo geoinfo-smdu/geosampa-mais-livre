@@ -33,3 +33,45 @@ O Plugin do GeoSampa, o GeoSampa+Livre está disponível nas lojas dos Browser F
 
 - [Extensão do GeoSampa para Firefox](https://addons.mozilla.org/pt-BR/firefox/addon/geosampa-livre/)
 - [Extensão do GeoSampa para GoogleChrome](https://chrome.google.com/webstore/detail/geosampa%2Blivre/blodiljgmokaioebejlhlmniiafddmbk)
+
+## Para desenvolver
+1. Clone este repositório.
+
+```bash
+git clone https://github.com/geoinfo-smdu/geosampa-mais-livre.git
+```
+> Ou você pode baixar o [zip](https://github.com/geoinfo-smdu/geosampa-mais-livre/archive/master.zip)
+
+2. Abra o chrome. Utilizando a barra de navegação vá para
+
+```bash
+chrome://extensions
+```
+3. Habilite o modo de desenvolvedor
+4. Selecione "Carregar sem compactação" selecione o diretório `src` da sua cópia deste repositório
+5. Vá para o site do [geosampa](http://geosampa.prefeitura.sp.gov.br/PaginasPublicas/_SBC.aspx). Se tudo der certo você deverá ver o ícone colorido da extensão ![icone](./src/icons/geosampa-mais-48px.png) na barra do navegador. A cada atualização no diretório `src` o browser irá atualizar página e recarregar automaticamente a extensão
+
+## Para publicar
+### Pré-requisitos
+ - [git](https://git-scm.com/downloads)
+ - [nodejs](https://nodejs.org/en/download)
+
+1. Clone este repositório e instale as dependências
+
+```bash
+# clone o repositório
+git clone https://github.com/geoinfo-smdu/geosampa-mais-livre.git
+
+# vá para o diretório
+cd geosampa-mais-livre
+
+# instale as dependências
+npm install
+```
+
+2. Rode o comando para criar o pacote da publicação
+
+```bash
+npm run build
+```
+O comando irá criar um diretório `dist`. Publique o conteúdo deste diretório.
