@@ -1,45 +1,62 @@
+
 (function () {
-    function verifyHeaderElement () {
-        return document.evaluate('/html/body/form/div[22]/table/tbody/tr/td[1]/img', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue == null;
+
+    // Necessário para dar acesso a variáveis globais da página como jQuery e a instância do mapa do Open Layers ('map')
+    // Solução e demais contexto do problema: https://stackoverflow.com/questions/9515704/insert-code-into-the-page-context-using-a-content-script/9517879#9517879
+    function setPageGLobalsAccess (files) {
+        files.forEach(file => {
+            const s = document.createElement('script')
+            s.src = chrome.runtime.getURL(file)
+            s.onload = function() {
+                this.remove()
+            };
+            (document.head || document.documentElement).appendChild(s)
+        })
     }
 
-    if (!verifyHeaderElement()) throw new Error('A extensão Geosampa mais livre não pôde ser carregada')
+    setPageGLobalsAccess(['js/osm.js'])
 
+    function verifyHeaderElement() {
+        return document.evaluate('/html/body/form/div[22]/table/tbody/tr/td[1]/img', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue == null;
+    }
+    
+    console.log(verifyHeaderElement());
+    
     // Get HTML head element 
-    var head = document.getElementsByTagName('HEAD')[0];
+    var head = document.getElementsByTagName('HEAD')[0];  
     // Create new link Element 
-    var link = document.createElement('link');
-    // set the attributes for link element
-    link.rel = 'stylesheet';
+    var link = document.createElement('link'); 
+    // set the attributes for link element  
+    link.rel = 'stylesheet';  
     link.type = 'text/css'; 
-    link.href = chrome.runtime.getURL('css/awesomplete.css');
+    link.href = chrome.runtime.getURL("css/awesomplete.css");  
     // Append link element to HTML head 
     head.appendChild(link);  
-
+    
     let url = 'http://geosampa.prefeitura.sp.gov.br/js/Layers.js';
     let jsonLayers;
     var listaA = [];
-
+    
     fetch(url)
-        .then(res => res.json())
-        .then((out) => {
-        jsonLayers = out;
-        out.layersMapa.forEach(element => {
-            listaA.push({"label":element.layerLabel, "value":element.layerID});
-            if (element.subcamadas.length > 0) {
-                element.subcamadas.forEach(element => {
-                    if (element.subcamadas.length > 0) {
-                        element.subcamadas.forEach(element => {
-                            listaA.push({"label":element.layerLabel, "value":element.layerID}); 
-                        })
-                    }
-                    listaA.push({"label":element.layerLabel, "value":element.layerID}); 
-                })
-            }
-        })
+    .then(res => res.json())
+    .then((out) => {
+      jsonLayers = out;
+      out.layersMapa.forEach(element => {
+        listaA.push({"label":element.layerLabel, "value":element.layerID});
+        if (element.subcamadas.length > 0) {
+            element.subcamadas.forEach(element => {
+                if (element.subcamadas.length > 0) {
+                    element.subcamadas.forEach(element => {
+                        listaA.push({"label":element.layerLabel, "value":element.layerID}); 
+                    })
+                }
+                listaA.push({"label":element.layerLabel, "value":element.layerID}); 
+            })
+        }
+    });
     })
     .catch(err => { throw err });
-
+    
     var updateHeader = function() {
         if (verifyHeaderElement()) {
             setTimeout(updateHeader, 100);
@@ -67,7 +84,7 @@
             // criar um autocomplete https://leaverou.github.io/awesomplete/
         }
     }
-
+    
     function abreCamada(camada) {
         console.log(camada.text.value);
         console.log(document.getElementById(camada.text.value));
@@ -81,5 +98,7 @@
         el.click();
         el.scrollIntoView({behavior: "smooth", block: "start"});
     }
+    
     updateHeader();
+
 })()

@@ -17,12 +17,16 @@
       "js": [
         "js/mais-livre.js",
         "js/vendor/awesomplete.js"
+      ],
+      "css": [
+        "css/osm.css"
       ]
     }
   ],
   "web_accessible_resources": [
     "images/*.png",
-    "css/*.css"
+    "css/awesomplete.css",
+    "js/osm.js"
   ],
   "background": { "scripts": ["hot-reload.js"] }
 }

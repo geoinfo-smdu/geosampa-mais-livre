@@ -1,0 +1,11 @@
+.osm,
+.olControlPanel__custom-item {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  z-index: 1000;
+}}
+
+.osm__buscar {
+  margin: 0.5rem 0;
+}
