@@ -2,10 +2,11 @@
   "name": "geosampa-mais-livre",
   "private": true,
   "version": "1.0.0",
-  "description": "GeoSampa+livre é uma extensão para browser que adiciona algumas funcionalidades ao site do [GeoSampa](http://geosampa.prefeitura.sp.gov.br)",
+  "description": "Complemento que adiciona algumas funcionalidades ao GeoSampa, o SIG da Prefeitura do Município de São Paulo",
   "main": "index.js",
   "scripts": {
-    "build": "parcel build src/manifest.json"
+    "build": "parcel build src/manifest.json",
+    "dev": "parcel src/manifest.json --no-autoinstall"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,8 @@
   "devDependencies": {
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-web-extension": "^1.6.1"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
   }
 }

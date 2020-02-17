@@ -1,10 +1,10 @@
+import axios from 'axios'
 (function () {
 
     const panelid = 'OpenLayers_Control_Panel_581'
-
     const element = {
-        init: id => this.id = id,
-        get: () => document.getElementById(this.id),
+        init: id => window.id = id,
+        get: () => document.getElementById(window.id),
         create: (node, el) => {
             let child = document.createElement(el)
             node.appendChild(child)
@@ -21,8 +21,9 @@
     }
 
     const view = id => {
+        if (!id) { return }
         const panel = Object.create(element)
-        panel.init(id)
+        panel.init('OpenLayers_Control_Panel_581')
 
         const olmenu = panel.get()
         const menuItem = panel.create(olmenu, 'form')
@@ -37,9 +38,9 @@
             event.preventDefault()
             map.setCenter([7391311.26420, 324625.01921353], 4, true, false)
 
-            fetch(`https://nominatim.openstreetmap.org/search?city=S%C3%A3o%20Paulo&postalcode=01307-000&format=json`)
-                .then(res => res.json())
-                .then(res => console.log(res))
+            axios.get(`https://nominatim.openstreetmap.org/search?city=S%C3%A3o%20Paulo&postalcode=01307-000&format=json`)
+                .then(res=>console.log(res))
+
         })
     }
 

@@ -27,6 +27,5 @@
     "images/*.png",
     "css/awesomplete.css",
     "js/osm.js"
-  ],
-  "background": { "scripts": ["hot-reload.js"] }
+  ]
 }
