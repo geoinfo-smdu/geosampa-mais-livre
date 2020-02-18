@@ -72,6 +72,7 @@
             searchBox.className = "awesomplete";
             searchBox.setAttribute("data-list", "listaCamadas");
             searchBox.setAttribute("id", "searchBox");
+            searchBox.setAttribute("title", "Buscar camadas");
             divSearch.appendChild(searchBox);
             document.getElementById("LayersWhiteCamadas").insertAdjacentElement('afterbegin', divSearch);
             var awesomplete = new Awesomplete(searchBox);

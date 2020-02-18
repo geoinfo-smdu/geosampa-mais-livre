@@ -44,7 +44,7 @@ import MaskInput from 'mask-input'
                     <input class="osm__input" id="osm__cep type="number" value></input>
                     <button class="osm__btn" id="osm__buscar">BUSCAR</button>
                 </div>
-                <button class="osm__toggle" id="osm__toggle-cep">
+                <button title="Buscar por CEP" class="osm__toggle" id="osm__toggle-cep">
                     <span class="toggle__span ativo">${icons.seta}</span>
                 </button>
             </form>
@@ -66,9 +66,10 @@ import MaskInput from 'mask-input'
             event.preventDefault()
 
             const cep = jQuery('.osm__input').val()
-            // map.setCenter([7391311.26420, 324625.01921353], 4, true, false)
+            // map.setCenter([7391311.26420, 324625.01921353], 8, true, false)
             axios.get(`https://nominatim.openstreetmap.org/search?city=S%C3%A3o%20Paulo&postalcode=${cep}&format=json`)
                 .then(res => {
+                    console.log(res.data)
                     const lat = res.data[0].lat
                     const lon = res.data[0].lon
                     map.setCenter([lat, lon], 8, true, false)
