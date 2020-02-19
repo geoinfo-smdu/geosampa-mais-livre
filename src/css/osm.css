@@ -6,7 +6,7 @@
   z-index: 100000!important;
   grid-template-columns: 4fr 1fr;
   position: fixed;
-  left: -218px;
+  left: -313px;
   transition: all 0.2s ease-in-out;
 }
 
@@ -22,7 +22,7 @@
   flex-direction: column;
   background: #E0EAF4;
   padding: 2rem 1.7rem 1.7rem 2.5rem;
-  max-width: 157px;
+  max-width: 250px;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -54,15 +54,14 @@
   height: 48px;
   border: 0;
   border-radius: 2px;
-  padding: 1rem;
-  font-size: 18px;
+  padding: 0.5rem;
+  font-size: small;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.12);
   margin: 1rem 0;
 }
 
 .osm__input::placeholder {
-  color: #E0E0E0;
-
+  color: #B2B0B0
 }
 
 .osm__toggle {
@@ -85,3 +84,25 @@
   transform: rotate(180deg);
 }
 
+#popup_message {
+  padding-left: 5px!important;
+}
+
+.message__osm-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  line-height: 3;
+}
+
+.osm-list__location {
+  display: flex;
+  align-items: center
+}
+
+.osm-list__location p {
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}

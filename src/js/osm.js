@@ -1,5 +1,4 @@
 import axios from 'axios'
-import MaskInput from 'mask-input'
 
 (function () {
     const panelid = 'OpenLayers_Control_Panel_581'
@@ -22,11 +21,8 @@ import MaskInput from 'mask-input'
         }
     }
     const icons = {
-        seta: `
-            <svg width="16" height="8" viewBox="0 0 16 8" fill="none">
-                <path d="M12.01 3H0V5H12.01V8L16 4L12.01 0V3Z" fill="white"/>
-            </svg>
-        `
+        seta: `<svg width="16" height="8" viewBox="0 0 16 8" fill="none"><path d="M12.01 3H0V5H12.01V8L16 4L12.01 0V3Z" fill="white"/></svg>`,
+        local: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`
     }
 
     const view = id => {
@@ -36,49 +32,68 @@ import MaskInput from 'mask-input'
 
         const olmenu = panel.get()
         const menuItem = panel.create(olmenu, 'div')
+        const toggleSearchBox = () => {
+            jQuery(`#${menuItem.randomId}`).toggleClass('aberto')
+            jQuery('.toggle__span').toggleClass('ativo')
+            jQuery('.osm__input').focus()
+        }
 
         panel.render(menuItem.child, `
             <form>
-                <div class="osm__group" id="osm__group--cep">
-                    <label class="osm__label" for="osm__cep">CEP</label>
-                    <input class="osm__input" id="osm__cep type="number" value></input>
+                <div class="osm__group" id="osm__group--search">
+                    <label class="osm__label" for="osm__search">Busca locais*</label>
+                    <input class="osm__input" id="osm__search type="text" placeholder="exemplos: largo da batata, masp" value></input>
                     <button class="osm__btn" id="osm__buscar">BUSCAR</button>
+                    <p>* Busca de textual de locais. Fontes: <a href="https://nominatim.org/">nominatim.org</a> e <a href="https://www.openstreetmap.org/#map=4/-15.07/-64.20">Open Street Map</a></p>
                 </div>
-                <button title="Buscar por CEP" class="osm__toggle" id="osm__toggle-cep">
+                <button title="Buscar no OSM" class="osm__toggle" id="osm__toggle-search">
                     <span class="toggle__span ativo">${icons.seta}</span>
                 </button>
             </form>
         `)
 
-        jQuery('#osm__toggle-cep').click(() => {
-            jQuery(`#${menuItem.randomId}`).toggleClass('aberto')
-            jQuery('.toggle__span').toggleClass('ativo')
-
-            new MaskInput(document.querySelector('.osm__input'), {
-                mask: '00000-000',
-                alwaysShowMask: true,
-                maskChar: '0'
-            })
-            document.querySelector('.osm__input').focus()
-        })
+        jQuery('#osm__toggle-search').click(() => toggleSearchBox())
 
         jQuery('#osm__buscar').click(event => {
             event.preventDefault()
 
-            const cep = jQuery('.osm__input').val()
-            // map.setCenter([7391311.26420, 324625.01921353], 8, true, false)
-            axios.get(`https://nominatim.openstreetmap.org/search?city=S%C3%A3o%20Paulo&postalcode=${cep}&format=json`)
+            const input = jQuery('.osm__input').val()
+
+            setTimeout(() => {
+                toggleSearchBox()
+            }, 1000)
+
+            axios.get(`https://nominatim.openstreetmap.org/search?q=${ input },S%C3%A3o%20Paulo,%20SP,%20Brazil&countrycode=br&format=json`)
                 .then(res => {
-                    console.log(res.data)
-                    const lat = res.data[0].lat
-                    const lon = res.data[0].lon
-                    map.setCenter([lat, lon], 8, true, false)
+                    if (!res.data.length) {
+                        jAlert(`Nenhum local foi encontrado para o termo ${ input } não foi encontrado`, 'Tente novamente')
+                    }
+                    else {
+                        // console.log(res.data)
+                        const newCenter = (lon, lat) => {
+                            const fromProjection = new OpenLayers.Projection('EPSG:4326')  // OSM
+                            const toProjection   = new OpenLayers.Projection('EPSG:31983') // GeoSampa
+                            return new OpenLayers.LonLat(lon, lat).transform(fromProjection, toProjection)
+                        }
+
+                        const places =  res.data.map(place => {
+                            return {
+                                name: place.display_name,
+                                center: newCenter(place.lon, place.lat)
+                            }
+                        })
+
+                        const placesStr = places
+                            .map(place => `<li class="osm-list__location"><p>${ place.name }</p><button onClick="(function(){map.setCenter([${ place.center }], 8, true, false);jQuery('#popup_ok').click()})()">${ icons.local }</button></li>`)
+                            .join('')
+
+                        jAlert(`<ul class="message__osm-list">${ placesStr }</ul>`, 'Lista de locais', function () { })
+                    }
                 })
                 .catch(err => {
                     console.error(err)
                 })
         })
-
     }
 
     const osm = () => {
