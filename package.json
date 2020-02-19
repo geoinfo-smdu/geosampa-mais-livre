@@ -1,0 +1,27 @@
+{
+  "name": "geosampa-mais-livre",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Complemento que adiciona algumas funcionalidades ao GeoSampa, o SIG da Prefeitura do Município de São Paulo",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel build src/manifest.json",
+    "dev": "parcel src/manifest.json --no-autoinstall"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geoinfo-smdu/geosampa-mais-livre.git"
+  },
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/geoinfo-smdu/geosampa-mais-livre/issues"
+  },
+  "homepage": "https://github.com/geoinfo-smdu/geosampa-mais-livre#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-web-extension": "^1.6.1"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}
