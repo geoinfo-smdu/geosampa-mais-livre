@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 (function () {
-    const panelid = 'OpenLayers_Control_Panel_581'
+    const panelClass = 'olControlPanel'
     const element = {
-        init: id => document.id = id,
-        get: () => document.getElementById(document.id),
+        init: classname => document.classname = classname,
+        get: () => document.getElementsByClassName(panelClass)[0],
         create: (node, el) => {
             let child = document.createElement(el)
             const randomId = `osm__${Math.floor(Math.random() * 9999) + 1}`
@@ -25,10 +25,11 @@ import axios from 'axios'
         local: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`
     }
 
-    const view = id => {
-        if (!id) { return }
+    const view = classname => {
+        if (!classname) { return }
+
         const panel = Object.create(element)
-        panel.init(panelid)
+        panel.init(classname)
 
         const olmenu = panel.get()
         const menuItem = panel.create(olmenu, 'div')
@@ -69,7 +70,6 @@ import axios from 'axios'
                         jAlert(`Nenhum local foi encontrado para o termo ${ input } não foi encontrado`, 'Tente novamente')
                     }
                     else {
-                        // console.log(res.data)
                         const newCenter = (lon, lat) => {
                             const fromProjection = new OpenLayers.Projection('EPSG:4326')  // OSM
                             const toProjection   = new OpenLayers.Projection('EPSG:31983') // GeoSampa
@@ -96,9 +96,24 @@ import axios from 'axios'
         })
     }
 
-    const osm = () => {
-        if (!document.getElementById(panelid)) { setTimeout(osm, 100) }
-        else { view(panelid) }
+    const osm = (counter = 0) => {
+        if (process.env.NODE_ENV === 'development') {
+            counter === 1 ?
+                console.log(`--- Geosampa mais livre/OSM ---\ntentativas: ${counter}`) :
+                console.log(`tentativas: ${counter}`)
+        }
+
+        if (counter === 10) {
+            throw new Error(`Geosampa mais livre: não foi possível carregar osm/nominatim após ${counter} tentativas. Elemento de classe' ${panelClass}' não foi encontrado nesta página`)
+        }
+
+        else if (!document.getElementsByClassName(panelClass)[0]) {
+            setTimeout(osm, 1000, counter + 1)
+        }
+
+        else {
+            view(panelClass)
+        }
     }
     osm()
 })()
