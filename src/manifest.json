@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "GeoSampa+Livre",
-  "version": "0.1",
+  "version": "0.2.3",
 
   "description": "Complemento que adiciona algumas funcionalidades ao GeoSampa, o SIG da Prefeitura do Município de São Paulo",
 
